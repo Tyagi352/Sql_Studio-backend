@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ['https://sql-studio-frontend-6t0rr11ro-tyagi352s-projects.vercel.app/login'],
+    origin: ['https://sql-studio-frontend-6t0rr11ro-tyagi352s-projects.vercel.app'],
     credentials: true,
 }));
 
