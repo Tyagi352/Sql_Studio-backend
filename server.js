@@ -10,17 +10,24 @@ connectDB();
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+    process.env.CLIENT_URL,
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://sql-studio-frontend-seven.vercel.app",
+].filter(Boolean);
+
 app.use(cors({
     origin: function (origin, callback) {
+        // Allow requests with no origin (mobile apps, curl, server-to-server)
         if (!origin) return callback(null, true);
-        const allowedOrigins = [
-            "http://localhost:5173",
-            "https://sql-studio-backend-m4tl.onrender.com"]
 
-        if (allowedOrigins.includes(origin)) {
+        const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.vercel.app');
+
+        if (isAllowed) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(null, false);
         }
     },
     credentials: true,
