@@ -12,8 +12,16 @@ const app = express();
 // Middleware
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow any origin
-        callback(null, true);
+        if (!origin) return callback(null, true);
+        const allowedOrigins = [
+            "http://localhost:5173",
+            "https://sql-studio-backend-m4tl.onrender.com"]
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
     },
     credentials: true,
 }));
